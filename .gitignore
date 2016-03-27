@@ -63,5 +63,5 @@ target/
 
 # added ignore list
 *backup.py
-data/
+*/data/
 *.pkl*
