@@ -1,0 +1,281 @@
+"""
+A tutorial on statistical-learning for scientific data processing
+http://scikit-learn.org/stable/tutorial/statistical_inference/index.html
+"""
+
+import pylab as pl
+import numpy as np
+from sklearn import svm
+from sklearn import datasets
+from sklearn import linear_model
+from sklearn.neighbors import KNeighborsClassifier
+
+'''
+Statistical learning: the setting and the estimator object in scikit-learn
+http://scikit-learn.org/stable/tutorial/statistical_inference/settings.html
+'''
+
+# --- Datasets ---
+iris = datasets.load_iris()
+data = iris.data
+# Prints out array of type: [Observations, Features] -> (150, 4)
+print("data.shape (Observations, Features): ")
+print(data.shape)
+print('\n')
+
+# --- Reshaping example for data which isn't preprocessed ---
+digits = datasets.load_digits()
+print("digits.images.shape: ")
+print(digits.images.shape)
+print('\n')
+print(pl.imshow(digits.images[-1], cmap=pl.cm.gray_r))
+print('\n')
+# show the image
+# pl.show()
+# transform each 8x8 image into a feature vector of length 64
+reshaped_data = digits.images.reshape((digits.images.shape[0], -1))
+
+# --- Estimators objects ---
+'''
+Fitting data: the main API implemented by scikit-learn is that of the estimator.
+An estimator is any object that learns from data; it may be a classification,
+regression or clustering algorithm or a transformer that extracts/filters useful
+features from raw data.
+
+    estimator.fit(data)
+
+    estimator = Estimator(param1=1, param2=2)
+    print(estimator.param1)
+
+# When data is fitted with an estimator, parameters are estimated from the data at hand.
+# All the estimated parameters are attributes of the estimator object ending by an underscore:
+
+    estimator.estimated_param_
+
+'''
+
+'''
+Supervised learning: predicting an output variable from high-dimensional observations
+http://scikit-learn.org/stable/tutorial/statistical_inference/supervised_learning.html
+
+- The problem solved in supervised learning
+Supervised learning consists in learning the link between two datasets: the observed data X and an external 
+variable y that we are trying to predict, usually called "target" or "labels". Most often, y is a 1D array of 
+length n_samples. All supervised estimators in scikit-learn implement a fit(X, y) method to fit the model and
+a predict(X) method that, given unlabeled observations X, returns the predicted labels y.
+
+- Vocabulary: classification and regression
+If the prediction task is to classify the observations in a set of finite labels, in other words to "name" the
+objects observed, the task is said to be a classification task. On the other hand, if the goal is to predict a
+continuous target variable, it is said to be a regression task. When doing classification in scikit-learn, y is a
+vector of integers or strings.
+
+'''
+
+# Classifying iris
+iris_X = iris.data
+iris_y = iris.target
+print("np.unique(iris_y): ")
+print(np.unique(iris_y))
+print('\n')
+
+# --- Nearest neighbor and the curse of dimensionality ---
+# http://scikit-learn.org/stable/tutorial/statistical_inference/supervised_learning.html#nearest-neighbor-and-the-curse-of-dimensionality
+# Split iris data in train and test data
+# A random permutation, to split the data randomly
+np.random.seed(0)
+indices = np.random.permutation(len(iris_X))
+iris_X_train = iris_X[indices[:-10]]
+iris_y_train = iris_y[indices[:-10]]
+iris_X_test = iris_X[indices[-10:]]
+iris_y_test = iris_y[indices[-10:]]
+
+# Create and fit a nearest-neighbor classifier
+knn = KNeighborsClassifier()
+print("knn.fit(iris_X_train, iris_y_train): ")
+print(knn.fit(iris_X_train, iris_y_train))
+print('\n')
+print("knn.predict(iris_X_test): ")
+print(knn.predict(iris_X_test))
+print('\n')
+print("iris_y_test: ")
+print(iris_y_test)
+print('\n')
+
+
+# --- Linear model: from regression to sparsity ---
+# http://scikit-learn.org/stable/tutorial/statistical_inference/supervised_learning.html#linear-model-from-regression-to-sparsity
+
+# diabetes data set;
+# - consists of 10 physiological variables (age, sex, weight, blood pressure)
+# - measured on 442 patients
+# - with indication of disease progression after one year
+diabetes = datasets.load_diabetes()
+diabetes_X_train = diabetes.data[:-20]
+diabetes_X_test = diabetes.data[-20:]
+diabetes_y_train = diabetes.target[:-20]
+diabetes_y_test = diabetes.target[-20:]
+
+# LINEAR REGRESSION
+
+# linear model: y = XB + e;
+# X: data
+# y: target variable
+# B (beta): Coefficients
+# e (epsilon): Observation noise
+regr = linear_model.LinearRegression()
+print("regr.fit(diabetes_X_train, diabetes_y_train)")
+print(regr.fit(diabetes_X_train, diabetes_y_train))
+print('\n')
+
+print("regr.coef_")
+print(regr.coef_)
+print('\n')
+
+# The mean square error
+print("np.mean((regr.predict...)")
+print(np.mean((regr.predict(diabetes_X_test)-diabetes_y_test)**2))
+print('\n')
+
+# Explained variance score:
+# 1 is perfect prediction and 0 means that there is no linear relationship between X and Y.
+print("regr.score(diabetes_X_test, diabetes_y_test)")
+print(regr.score(diabetes_X_test, diabetes_y_test))
+print('\n')
+
+# SHRINKAGE
+X = np.c_[.5, 1].T
+y = [.5, 1]
+test = np.c_[0, 2].T
+show_plot = False
+
+
+def shrinkage_loop(regression, test_data, x, y, show=False):
+    """
+    Loop for shrinking the regression data
+
+    Arguments:
+        :param regression: The linear regression object
+        :param test_data: Test data
+        :param x: array for X
+        :param y: array for Y
+        :param show: Should plot figure be shown
+
+    Returns:
+        :return: None || pylab.show()
+
+    """
+    pl.figure()
+    np.random.seed(0)
+    for _ in range(6):
+        this_x = .1 * np.random.normal(size=(2, 1)) + x
+        regression.fit(this_x, y)
+        pl.plot(test_data, regression.predict(test_data))
+        pl.scatter(this_x, y, s=3)
+    if show:
+        return pl.show()
+
+regr = linear_model.LinearRegression()
+shrinkage_loop(regr, test, X, y, show_plot)
+
+# Rigde regression;
+# See: http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html#sklearn.linear_model.Ridge
+regr = linear_model.Ridge(alpha=.1)
+shrinkage_loop(regr, test, X, y, show_plot)
+
+alphas = np.logspace(-4, -1, 6)
+print("[ regr.set_params(alpha=alpha) ... ]")
+print([regr.set_params(alpha=alpha)
+      .fit(diabetes_X_train, diabetes_y_train,)
+      .score(diabetes_X_test, diabetes_y_test)
+       for alpha in alphas])
+print('\n')
+
+# SPARSITY
+'''
+To improve the conditioning of the problem (i.e. mitigating the The curse of dimensionality),
+it would be interesting to select only the informative features and set non-informative ones,
+like feature 2 to 0. Ridge regression will decrease their contribution, but not set them to zero.
+Another penalization approach, called Lasso (least absolute shrinkage and selection operator), can
+set some coefficients to zero. Such methods are called sparse method and sparsity can be seen as an
+application of Occam's razor: prefer simpler models.
+'''
+regr = linear_model.Lasso()
+scores = [regr.set_params(alpha=alpha)
+              .fit(diabetes_X_train, diabetes_y_train)
+              .score(diabetes_X_test, diabetes_y_test)
+          for alpha in alphas]
+best_alpha = alphas[scores.index(max(scores))]
+regr.alpha = best_alpha
+
+print("regr.fit(diabetes_X_train, diabetes_y_train))")
+print(regr.fit(diabetes_X_train, diabetes_y_train))
+print('\n')
+
+print("regr.coef_")
+print(regr.coef_)
+print('\n')
+
+# CLASSIFICATION
+# See: http://scikit-learn.org/stable/tutorial/statistical_inference/supervised_learning.html#classification
+'''
+The C parameter controls the amount of regularization in the LogisticRegression object:
+a large value for C results in less regularization. penalty="l2" gives Shrinkage (i.e.
+non-sparse coefficients), while penalty="l1" gives Sparsity.
+
+Below is logistic regression:
+'''
+logistic = linear_model.LogisticRegression(C=1e5)
+print("logistic.fit(iris_X_train, iris_y_train)")
+print(logistic.fit(iris_X_train, iris_y_train))
+print('\n')
+
+'''
+Exercise
+Try classifying the digits dataset with nearest neighbors and a linear model.
+Leave out the last 10% and test prediction performance on these observations.
+'''
+digits = datasets.load_digits()
+X_digits = digits.data
+y_digits = digits.target
+
+# --- Support vector machines (SVMs) ---
+# http://scikit-learn.org/stable/tutorial/statistical_inference/supervised_learning.html#support-vector-machines-svms
+svc = svm.SVC(kernel='linear')
+print("svc.fit(iris_X_train, iris_y_train)")
+print(svc.fit(iris_X_train, iris_y_train))
+print('\n')
+
+# linear kernel
+svc_linear = svm.SVC(kernel='linear')
+
+# polynomial kernel
+# degree: polynomial degree
+svc_poly = svm.SVC(kernel='poly', degree=3)
+
+# RBF kernel (Radial Basis Function)
+# gamma: inverse of size of radial kernel
+svc_rbf = svm.SVC(kernel='rbf')
+
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+X = X[y != 0, :2]
+y = y[y != 0]
+
+
+'''
+Model selection: choosing estimators and their parameters
+http://scikit-learn.org/stable/tutorial/statistical_inference/model_selection.html
+'''
+
+'''
+Unsupervised learning: seeking representations of the data
+http://scikit-learn.org/stable/tutorial/statistical_inference/unsupervised_learning.html
+'''
+
+'''
+Putting it all together
+http://scikit-learn.org/stable/tutorial/statistical_inference/putting_together.html
+'''
