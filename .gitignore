@@ -65,3 +65,5 @@ target/
 *backup.py
 */data/
 *.pkl*
+exercise*
+output*
