@@ -12,10 +12,14 @@ corpus = [
     'Is this the first document?',
 ]
 
+# HashingVectorizer is stateless, meaning that you don't have to call fit on it
 hv = HashingVectorizer(n_features=10)
+print hv.transform(corpus).__repr__()
 print hv.transform(corpus)
 print
 
+
 hv = HashingVectorizer()
+print hv.transform(corpus).__repr__()
 print hv.transform(corpus)
 print

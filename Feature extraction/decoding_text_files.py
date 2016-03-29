@@ -30,5 +30,7 @@ decoded = [x.decode(chardet.detect(x)['encoding'])
 
 v = CountVectorizer().fit(decoded).vocabulary_
 
-for term in v:
-    print(v)
+print v
+
+# for term in v:
+#     print(v)
