@@ -20,15 +20,15 @@ iris = datasets.load_iris()
 data = iris.data
 # Prints out array of type: [Observations, Features] -> (150, 4)
 print("data.shape (Observations, Features): ")
-print((data.shape))
+print(data.shape)
 print('\n')
 
 # --- Reshaping example for data which isn't preprocessed ---
 digits = datasets.load_digits()
 print("digits.images.shape: ")
-print((digits.images.shape))
+print(digits.images.shape)
 print('\n')
-print((pl.imshow(digits.images[-1], cmap=pl.cm.gray_r)))
+print(pl.imshow(digits.images[-1], cmap=pl.cm.gray_r))
 print('\n')
 # show the image
 # pl.show()
@@ -76,7 +76,7 @@ vector of integers or strings.
 iris_X = iris.data
 iris_y = iris.target
 print("np.unique(iris_y): ")
-print((np.unique(iris_y)))
+print(np.unique(iris_y))
 print('\n')
 
 # --- Nearest neighbor and the curse of dimensionality ---
@@ -93,10 +93,10 @@ iris_y_test = iris_y[indices[-10:]]
 # Create and fit a nearest-neighbor classifier
 knn = KNeighborsClassifier()
 print("knn.fit(iris_X_train, iris_y_train): ")
-print((knn.fit(iris_X_train, iris_y_train)))
+print(knn.fit(iris_X_train, iris_y_train))
 print('\n')
 print("knn.predict(iris_X_test): ")
-print((knn.predict(iris_X_test)))
+print(knn.predict(iris_X_test))
 print('\n')
 print("iris_y_test: ")
 print(iris_y_test)
@@ -125,22 +125,22 @@ diabetes_y_test = diabetes.target[-20:]
 # e (epsilon): Observation noise
 regr = linear_model.LinearRegression()
 print("regr.fit(diabetes_X_train, diabetes_y_train)")
-print((regr.fit(diabetes_X_train, diabetes_y_train)))
+print(regr.fit(diabetes_X_train, diabetes_y_train))
 print('\n')
 
 print("regr.coef_")
-print((regr.coef_))
+print(regr.coef_)
 print('\n')
 
 # The mean square error
 print("np.mean((regr.predict...)")
-print((np.mean((regr.predict(diabetes_X_test)-diabetes_y_test)**2)))
+print(np.mean((regr.predict(diabetes_X_test)-diabetes_y_test)**2))
 print('\n')
 
 # Explained variance score:
 # 1 is perfect prediction and 0 means that there is no linear relationship between X and Y.
 print("regr.score(diabetes_X_test, diabetes_y_test)")
-print((regr.score(diabetes_X_test, diabetes_y_test)))
+print(regr.score(diabetes_X_test, diabetes_y_test))
 print('\n')
 
 # SHRINKAGE
@@ -209,11 +209,11 @@ best_alpha = alphas[scores.index(max(scores))]
 regr.alpha = best_alpha
 
 print("regr.fit(diabetes_X_train, diabetes_y_train))")
-print((regr.fit(diabetes_X_train, diabetes_y_train)))
+print(regr.fit(diabetes_X_train, diabetes_y_train))
 print('\n')
 
 print("regr.coef_")
-print((regr.coef_))
+print(regr.coef_)
 print('\n')
 
 # CLASSIFICATION
@@ -227,7 +227,7 @@ Below is logistic regression:
 '''
 logistic = linear_model.LogisticRegression(C=1e5)
 print("logistic.fit(iris_X_train, iris_y_train)")
-print((logistic.fit(iris_X_train, iris_y_train)))
+print(logistic.fit(iris_X_train, iris_y_train))
 print('\n')
 
 '''
@@ -243,7 +243,7 @@ y_digits = digits.target
 # http://scikit-learn.org/stable/tutorial/statistical_inference/supervised_learning.html#support-vector-machines-svms
 svc = svm.SVC(kernel='linear')
 print("svc.fit(iris_X_train, iris_y_train)")
-print((svc.fit(iris_X_train, iris_y_train)))
+print(svc.fit(iris_X_train, iris_y_train))
 print('\n')
 
 # linear kernel
@@ -278,7 +278,7 @@ digits = datasets.load_digits()
 X_digits = digits.data
 y_digits = digits.target
 svc = svm.SVC(C=1, kernel='linear')
-print(svc.fit(X_digits[:-100], y_digits[:-100]).score(X_digits[-100:], y_digits[-100:]))
+print svc.fit(X_digits[:-100], y_digits[:-100]).score(X_digits[-100:], y_digits[-100:])
 
 # To get a better measure of prediction accuracy (which we can use as a proxy for goodness of fit of the model),
 # we can successively split the data in folds that we use for training and testing:
@@ -304,7 +304,7 @@ print(scores)
 # Scikit-learn exposes cross-validation generators to generate list of indices for this purpose:
 k_fold = cross_validation.KFold(n=6, n_folds=3)
 for train_indices, test_indices in k_fold:
-    print(('Train: %s | test: %s' % (train_indices, test_indices)))
+    print('Train: %s | test: %s' % (train_indices, test_indices))
 
 # The cross-validation can then be implemented easily:
 kfold = cross_validation.KFold(len(X_digits), n_folds=3)
@@ -327,15 +327,15 @@ cross_validation.cross_val_score(svc, X_digits, y_digits, cv=kfold, n_jobs=-1)
 Cs = np.logspace(-6, -1, 10)
 clf = GridSearchCV(estimator=svc, param_grid=dict(C=Cs),
                    n_jobs=-1)
-print(clf.fit(X_digits[:1000], y_digits[:1000]))
+print clf.fit(X_digits[:1000], y_digits[:1000])
 
-print(clf.best_score_)
+print clf.best_score_
 
-print(clf.best_estimator_.C)
+print clf.best_estimator_.C
 
 
 # Prediction performance on test set is not as good as on train set
-print(clf.score(X_digits[1000:], y_digits[1000:]))
+print clf.score(X_digits[1000:], y_digits[1000:])
 
 # By default, the GridSearchCV uses a 3-fold cross-validation.
 # However, if it detects that a classifier is passed, rather than a regressor, it uses a stratified 3-fold.
@@ -343,10 +343,10 @@ lasso = linear_model.LassoCV()
 diabetes = datasets.load_diabetes()
 X_diabetes = diabetes.data
 y_diabetes = diabetes.target
-print(lasso.fit(X_diabetes, y_diabetes))
+print lasso.fit(X_diabetes, y_diabetes)
 
 # The estimator chose automatically its lambda:
-print(lasso.alpha_)
+print lasso.alpha_
 
 '''
 Unsupervised learning: seeking representations of the data

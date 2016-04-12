@@ -3,22 +3,7 @@
   <component name="issues">
     <option name="index">
       <map>
-        <entry key="/Dummy.txt">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="/a.dummy">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/../MasterThesis/backup/test_xml_backup">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/../MasterThesis/htmlstripper.py">
           <value>
             <set />
           </value>
@@ -28,72 +13,102 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/../MasterThesis/mysqldatabase.py">
+        <entry key="$PROJECT_DIR$/../MasterThesis/python35_version/constants.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/common_vectorizer.py">
+        <entry key="$PROJECT_DIR$/../MasterThesis/python35_version/htmlstripper.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/customizing_vectorizer_classes.py">
+        <entry key="$PROJECT_DIR$/../MasterThesis/python35_version/main.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/decoding_text_files.py">
+        <entry key="$PROJECT_DIR$/../MasterThesis/python35_version/mysqldatabase.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/dictvectorizer.py">
+        <entry key="$PROJECT_DIR$/../MasterThesis/python35_version/training_data.dat">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/f1.py">
+        <entry key="$PROJECT_DIR$/Cross validation/cross_validation.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/f2.py">
+        <entry key="$PROJECT_DIR$/Cross validation/k-fold.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/f5.py">
+        <entry key="$PROJECT_DIR$/Cross validation/leave1out.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/feature_hashing.py">
+        <entry key="$PROJECT_DIR$/data_science_python/data_science_python.py">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/limits_bow_representations.py">
+        <entry key="$PROJECT_DIR$/example_files/document_classification_20newsgroups.txt">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/load_from_dict.py">
+        <entry key="$PROJECT_DIR$/example_files/file2.txt">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/text_feature_extraction.py">
+        <entry key="$PROJECT_DIR$/example_files/output/document_classification_20newsgroups.txt">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/tfidf_term_weighting.py">
+        <entry key="$PROJECT_DIR$/example_files/output/grid_search_text_feature_extraction.txt">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/Feature extraction/vector_large_corpus_hashing.py">
+        <entry key="$PROJECT_DIR$/example_files/plot_out_of_core_classification.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/panda_to_libsvm.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/sklearn_tutorial/data_representation.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/sklearn_tutorial/machine_learning_by_amueller.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/smvlight.dat">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/statistical_learning.py">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../testP3_mysql/test.py">
           <value>
             <set />
           </value>

@@ -4,12 +4,12 @@ import chardet
 from sklearn.feature_extraction.text import CountVectorizer
 
 # printout for space before start
-print()
+print
 
 # http://scikit-learn.org/stable/modules/feature_extraction.html#decoding-text-files
 
-print(" ===== Decoding-text-files ===== ")
-print()
+print " ===== Decoding-text-files ===== "
+print
 
 text1 = b"Sei mir gegr\xc3\xbc\xc3\x9ft mein Sauerkraut"
 
@@ -30,7 +30,7 @@ decoded = [x.decode(chardet.detect(x)['encoding'])
 
 v = CountVectorizer().fit(decoded).vocabulary_
 
-print(v)
+print v
 
 # for term in v:
 #     print(v)

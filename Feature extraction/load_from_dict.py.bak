@@ -19,12 +19,12 @@ prints
 
 because each city occurs only once for each temperature value
 '''
-print(vec.fit_transform(measurements).toarray())
-print()
+print vec.fit_transform(measurements).toarray()
+print
 
 # prints: ['city=Dubai', 'city=London', 'city=San Fransisco', 'temperature']
-print(vec.get_feature_names())
-print()
+print vec.get_feature_names()
+print
 
 # For example, suppose that we have a first algorithm that extracts Part of Speech (PoS) tags
 # that we want to use as complementary tags for training a sequence classifier (e.g. a chunker).
@@ -48,13 +48,13 @@ vec = DictVectorizer()
 pos_vectorized = vec.fit_transform(pos_window)
 
 # prints (row, column)
-print(pos_vectorized)
-print()
+print pos_vectorized
+print
 
 # prints: [[ 1.  1.  1.  1.  1.  1.]]
-print(pos_vectorized.toarray())
-print()
+print pos_vectorized.toarray()
+print
 
 # prints: ['pos+1=PP', 'pos-1=NN', 'pos-2=DT', 'word+1=on', 'word-1=cat', 'word-2=the']
-print(vec.get_feature_names())
-print()
+print vec.get_feature_names()
+print

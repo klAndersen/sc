@@ -2,8 +2,8 @@
 
 from sklearn.feature_extraction.text import HashingVectorizer
 
-print(" ===== Vector-large-corpus-hashing ===== ")
-print()
+print " ===== Vector-large-corpus-hashing ===== "
+print
 
 corpus = [
     'This is the first document.',
@@ -14,12 +14,12 @@ corpus = [
 
 # HashingVectorizer is stateless, meaning that you don't have to call fit on it
 hv = HashingVectorizer(n_features=10)
-print(hv.transform(corpus).__repr__())
-print(hv.transform(corpus))
-print()
+print hv.transform(corpus).__repr__()
+print hv.transform(corpus)
+print
 
 
 hv = HashingVectorizer()
-print(hv.transform(corpus).__repr__())
-print(hv.transform(corpus))
-print()
+print hv.transform(corpus).__repr__()
+print hv.transform(corpus)
+print

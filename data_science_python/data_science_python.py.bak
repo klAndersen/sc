@@ -14,134 +14,131 @@ import matplotlib.pyplot as plt
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.model_selection import train_test_split, cross_val_score
-import pickle
+import cPickle
 from textblob import TextBlob
 from sklearn.svm import SVC
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, learning_curve
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 
-print("----Start Step 1----")
-print('\n')
+print "----Start Step 1----"
+print
 
 # Step 1
 # http://radimrehurek.com/data_science_python/#Step-1:-Load-data,-look-around
 
 messages = [line.rstrip() for line in open('./data/SMSSpamCollection')]
-print(len(messages))
-print('\n')
+print len(messages)
+print
 
 for message_no, message in enumerate(messages[:10]):
-    print(message_no, message)
-print('\n')
+    print message_no, message
+print
 
 messages = pandas.read_csv('./data/SMSSpamCollection', sep='\t', quoting=csv.QUOTE_NONE,
                            names=["label", "message"])
-print(messages)
-print('\n')
+print messages
+print
 
-print(messages.groupby('label').describe())
-print('\n')
+print messages.groupby('label').describe()
+print
 
 messages['length'] = messages['message'].map(lambda text: len(text))
-print(messages.head())
-print('\n')
+print messages.head()
+print
 
 # plt.show(messages.length.plot(bins=20, kind='hist'))
 
-print(messages.length.describe())
-print('\n')
+print messages.length.describe()
+print
 
-print(list(messages.message[messages.length > 900]))
-print('\n')
+print list(messages.message[messages.length > 900])
+print
 
 messages.hist(column='length', by='label', bins=50)
 
 # plt.show(messages.hist(column='length', by='label', bins=50)
 
 
-print("----Start Step 2----")
-print('\n')
+print "----Start Step 2----"
+print
 
 
 # Step 2
 # http://radimrehurek.com/data_science_python/#Step-2:-Data-preprocessing
 
 def split_into_tokens(message):
-    # message = str(message, 'utf8')  # convert bytes into proper unicode
-    message = str(message).decode('utf-8')  # changed due to error (str only takes 1 argument, 2 given)
+    message = unicode(message, 'utf8')  # convert bytes into proper unicode
     return TextBlob(message).words
 
 
-print(messages.message.head())
-print('\n')
+print messages.message.head()
+print
 
-print(messages.message.head().apply(split_into_tokens))
-print('\n')
+print messages.message.head().apply(split_into_tokens)
+print
 
-print(TextBlob("Hello world, how is it going?").tags)  # list of (word, POS) pairs
-print('\n')
+print TextBlob("Hello world, how is it going?").tags  # list of (word, POS) pairs
+print
 
 
 def split_into_lemmas(message):
-    # print(message)
-    # message = str(message, 'utf8').lower()
-    message = str(message).decode('utf-8').lower()
+    message = unicode(message, 'utf8').lower()
     words = TextBlob(message).words
     # for each word, take its "base form" = lemma
     return [word.lemma for word in words]
 
 
-print(messages.message.head().apply(split_into_lemmas))
-print('\n')
+print messages.message.head().apply(split_into_lemmas)
+print
 
 
-print("----Start Step 3----")
-print('\n')
+print "----Start Step 3----"
+print
 
 
 # Step 3
 # http://radimrehurek.com/data_science_python/#Step-3:-Data-to-vectors
 
-bow_transformer = CountVectorizer(analyzer=split_into_lemmas, encoding='utf-8').fit(messages['message'])
-print(len(bow_transformer.vocabulary_))
-print('\n')
+bow_transformer = CountVectorizer(analyzer=split_into_lemmas).fit(messages['message'])
+print len(bow_transformer.vocabulary_)
+print
 
 message4 = messages['message'][3]
-print(message4)
-print('\n')
+print message4
+print
 
 bow4 = bow_transformer.transform([message4])
-print(bow4)
-print(bow4.shape)
-print('\n')
+print bow4
+print bow4.shape
+print
 
-print(bow_transformer.get_feature_names()[6736])
-print(bow_transformer.get_feature_names()[8013])
-print('\n')
+print bow_transformer.get_feature_names()[6736]
+print bow_transformer.get_feature_names()[8013]
+print
 
 messages_bow = bow_transformer.transform(messages['message'])
-print('sparse matrix shape:', messages_bow.shape)
-print('number of non-zeros:', messages_bow.nnz)
-print('sparsity: %.2f%%' % (100.0 * messages_bow.nnz / (messages_bow.shape[0] * messages_bow.shape[1])))
-print('\n')
+print 'sparse matrix shape:', messages_bow.shape
+print 'number of non-zeros:', messages_bow.nnz
+print 'sparsity: %.2f%%' % (100.0 * messages_bow.nnz / (messages_bow.shape[0] * messages_bow.shape[1]))
+print
 
 tfidf_transformer = TfidfTransformer().fit(messages_bow)
 tfidf4 = tfidf_transformer.transform(bow4)
-print(tfidf4)
-print('\n')
+print tfidf4
+print
 
-print(tfidf_transformer.idf_[bow_transformer.vocabulary_['u']])
-print(tfidf_transformer.idf_[bow_transformer.vocabulary_['university']])
-print('\n')
+print tfidf_transformer.idf_[bow_transformer.vocabulary_['u']]
+print tfidf_transformer.idf_[bow_transformer.vocabulary_['university']]
+print
 
 messages_tfidf = tfidf_transformer.transform(messages_bow)
-print(messages_tfidf.shape)
-print('\n')
+print messages_tfidf.shape
+print
 
 
-print("----Start Step 4----")
-print('\n')
+print "----Start Step 4----"
+print
 
 
 # Step 4
@@ -149,18 +146,18 @@ print('\n')
 
 spam_detector = MultinomialNB().fit(messages_tfidf, messages['label'])
 
-print('predicted:', spam_detector.predict(tfidf4)[0])
-print('expected:', messages.label[3])
-print('\n')
+print 'predicted:', spam_detector.predict(tfidf4)[0]
+print 'expected:', messages.label[3]
+print
 
 all_predictions = spam_detector.predict(messages_tfidf)
-print(all_predictions)
-print('\n')
+print all_predictions
+print
 
-print('accuracy', accuracy_score(messages['label'], all_predictions))
-print('confusion matrix\n', confusion_matrix(messages['label'], all_predictions))
-print('(row=expected, col=predicted)')
-print('\n')
+print 'accuracy', accuracy_score(messages['label'], all_predictions)
+print 'confusion matrix\n', confusion_matrix(messages['label'], all_predictions)
+print '(row=expected, col=predicted)'
+print
 
 plt.matshow(confusion_matrix(messages['label'], all_predictions), cmap=plt.cm.binary, interpolation='nearest')
 plt.title('confusion matrix')
@@ -170,12 +167,12 @@ plt.xlabel('predicted label')
 
 # plt.show()
 
-print(classification_report(messages['label'], all_predictions))
-print('\n')
+print classification_report(messages['label'], all_predictions)
+print
 
 
-print("----Start Step 5----")
-print('\n')
+print "----Start Step 5----"
+print
 
 
 # Step 5
@@ -184,8 +181,8 @@ print('\n')
 msg_train, msg_test, label_train, label_test = \
     train_test_split(messages['message'], messages['label'], test_size=0.2)
 
-print(len(msg_train), len(msg_test), len(msg_train) + len(msg_test))
-print('\n')
+print len(msg_train), len(msg_test), len(msg_train) + len(msg_test)
+print
 
 
 pipeline = Pipeline([
@@ -202,11 +199,11 @@ scores = cross_val_score(pipeline,  # steps to convert raw messages into models
                          scoring='accuracy',  # which scoring metric?
                          n_jobs=-1,  # -1 = use all cores = faster
                          )
-print(scores)
-print('\n')
+print scores
+print
 
-print(scores.mean(), scores.std())
-print('\n')
+print scores.mean(), scores.std()
+print
 
 
 def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
@@ -271,8 +268,8 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
 # plot_learning_curve(pipeline, "accuracy vs. training set size", msg_train, label_train, cv=5).show()
 
 
-print("----Start Step 6----")
-print('\n')
+print "----Start Step 6----"
+print
 
 
 # Step 6
@@ -294,22 +291,22 @@ grid = GridSearchCV(
 )
 
 nb_detector = grid.fit(msg_train, label_train)
-print(nb_detector.grid_scores_)
-print('\n')
+print nb_detector.grid_scores_
+print
 
-print(nb_detector.predict_proba(["Hi mom, how are you?"])[0])
-print(nb_detector.predict_proba(["WINNER! Credit for free!"])[0])
-print('\n')
+print nb_detector.predict_proba(["Hi mom, how are you?"])[0]
+print nb_detector.predict_proba(["WINNER! Credit for free!"])[0]
+print
 
 
-print(nb_detector.predict(["Hi mom, how are you?"])[0])
-print(nb_detector.predict(["WINNER! Credit for free!"])[0])
-print('\n')
+print nb_detector.predict(["Hi mom, how are you?"])[0]
+print nb_detector.predict(["WINNER! Credit for free!"])[0]
+print
 
 predictions = nb_detector.predict(msg_test)
-print(confusion_matrix(label_test, predictions))
-print(classification_report(label_test, predictions))
-print('\n')
+print confusion_matrix(label_test, predictions)
+print classification_report(label_test, predictions)
+print
 
 
 pipeline_svm = Pipeline([
@@ -335,20 +332,20 @@ grid_svm = GridSearchCV(
 )
 
 svm_detector = grid_svm.fit(msg_train, label_train)  # find the best combination from param_svm
-print(svm_detector.grid_scores_)
-print('\n')
+print svm_detector.grid_scores_
+print
 
-print(svm_detector.predict(["Hi mom, how are you?"])[0])
-print(svm_detector.predict(["WINNER! Credit for free!"])[0])
-print('\n')
+print svm_detector.predict(["Hi mom, how are you?"])[0]
+print svm_detector.predict(["WINNER! Credit for free!"])[0]
+print
 
-print(confusion_matrix(label_test, svm_detector.predict(msg_test)))
-print(classification_report(label_test, svm_detector.predict(msg_test)))
-print('\n')
+print confusion_matrix(label_test, svm_detector.predict(msg_test))
+print classification_report(label_test, svm_detector.predict(msg_test))
+print
 
 
-print("----Start Step 7----")
-print('\n')
+print "----Start Step 7----"
+print
 
 
 # Step 7
@@ -359,11 +356,11 @@ print('\n')
 
 # store the spam detector to disk after training
 with open('sms_spam_detector.pkl', 'wb') as fout:
-    pickle.dump(svm_detector, fout)
+    cPickle.dump(svm_detector, fout)
 
 # ...and load it back, whenever needed, possibly on a different machine
-svm_detector_reloaded = pickle.load(open('sms_spam_detector.pkl'))
+svm_detector_reloaded = cPickle.load(open('sms_spam_detector.pkl'))
 # The loaded result is an object that behaves identically to the original:
 
-print('before:', svm_detector.predict([message4])[0])
-print('after:', svm_detector_reloaded.predict([message4])[0])
+print 'before:', svm_detector.predict([message4])[0]
+print 'after:', svm_detector_reloaded.predict([message4])[0]

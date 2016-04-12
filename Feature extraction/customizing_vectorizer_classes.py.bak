@@ -4,15 +4,15 @@ from nltk import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 
-print(" ===== Customizing-the-Vectorizer-classes ===== ")
-print()
+print " ===== Customizing-the-Vectorizer-classes ===== "
+print
 
 
 def my_tokenizer(s):
     return s.split()
 
 vectorizer = CountVectorizer(tokenizer=my_tokenizer)
-print(vectorizer.build_analyzer()("Some... punctuation!") == (['some...', 'punctuation!']))
+print vectorizer.build_analyzer()(u"Some... punctuation!") == (['some...', 'punctuation!'])
 
 
 class LemmaTokenizer(object):
@@ -25,4 +25,4 @@ class LemmaTokenizer(object):
 
 vect = CountVectorizer(tokenizer=LemmaTokenizer())
 
-print(vect)
+print vect

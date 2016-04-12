@@ -5,8 +5,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 
-print(" ===== Tfidf-Term-Weighting ===== ")
-print()
+print " ===== Tfidf-Term-Weighting ===== "
+print
 
 corpus = [
     'This is the first document.',
@@ -16,8 +16,8 @@ corpus = [
 ]
 
 transformer = TfidfTransformer()
-print(transformer)
-print()
+print transformer
+print
 
 # here, first term is present in all documents (100% --- first column).
 # as for the rest, they are below 50% and are therefore more representative
@@ -31,26 +31,26 @@ counts = [[3, 0, 1],
 # tfidf only considers those where value > 0; 0 = non-existent
 # therefore some values are'nt listed, e.g. (0, 1), (1, 1), (1, 2), etc.
 tfidf = transformer.fit_transform(counts)
-print(tfidf)  # .__repr__()  # prints object as shown in example
-print()
+print tfidf  # .__repr__()  # prints object as shown in example
+print
 
 # prints the array containing the L2 normalized vectors
 # see also:
 # http://blog.christianperone.com/2011/10/machine-learning-text-feature-extraction-tf-idf-part-ii/
-print(tfidf.toarray())
-print()
+print tfidf.toarray()
+print
 
 # Each row is normalized to have unit euclidean norm.
 # The weights of each feature computed by the fit method call are stored in a model attribute:
-print(transformer.idf_)
-print()
+print transformer.idf_
+print
 
 # TfidfVectorizer combines all the options of CountVectorizer and TfidfTransformer in a single model
 # see also (2014):
 # http://stackoverflow.com/questions/22489264/is-a-countvectorizer-the-same-as-tfidfvectorizer-with-use-idf-false
 vectorizer = TfidfVectorizer(min_df=1)
-print(vectorizer.fit_transform(corpus))
-print()
+print vectorizer.fit_transform(corpus)
+print
 
 '''
 Is a countvectorizer the same as tfidfvectorizer with use_idf=false? (2014)
@@ -64,6 +64,6 @@ To make TfidfVectorizer behave as CountVectorizer, give it the constructor optio
 
 TfidfVectorizer normalizes its results, i.e. each vector in its output has norm 1:
 '''
-print(CountVectorizer().fit_transform(["foo bar baz", "foo bar quux"]).A)
+print CountVectorizer().fit_transform(["foo bar baz", "foo bar quux"]).A
 
-print(TfidfVectorizer(use_idf=False).fit_transform(["foo bar baz", "foo bar quux"]).A)
+print TfidfVectorizer(use_idf=False).fit_transform(["foo bar baz", "foo bar quux"]).A

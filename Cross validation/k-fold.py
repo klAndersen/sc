@@ -1,4 +1,9 @@
 """
+K(n, k)
+Split it K folds, train on K-1 and then test on left-out
+
+StratifiedKFold (y, k)
+It preserves the class ratios / label distribution within each fold.
 
 Based on:
 http://scikit-learn.org/stable/modules/cross_validation.html#k-fold

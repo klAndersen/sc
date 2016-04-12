@@ -1,8 +1,13 @@
 """
 
+LeaveOneOut (n)
+Leave one observation out
+
+LeaveOneLabelOut(labels)
+Takes a label array to group observations
+
 Based on:
 http://scikit-learn.org/stable/modules/cross_validation.html#leave-one-out-loo
-
 
 """
 

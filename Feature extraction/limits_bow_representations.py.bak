@@ -1,8 +1,8 @@
 # http://scikit-learn.org/stable/modules/feature_extraction.html#limitations-of-the-bag-of-words-representation
 from sklearn.feature_extraction.text import CountVectorizer
 
-print(" ===== Limits-BOW-representations ===== ")
-print()
+print " ===== Limits-BOW-representations ===== "
+print
 
 # Option 'char_wb' creates character n-grams only from text inside word boundaries (padded with space on each side)
 # basically, it only looks at the the word and not the sentence
@@ -11,8 +11,8 @@ counts = ngram_vectorizer.fit_transform(['words', 'wprds'])
 
 # prints true because each of these features exists in ngram_vectorizer
 # note that there is a space in ' w' and 's ' (space padding)
-print(ngram_vectorizer.get_feature_names() == ([' w', 'ds', 'or', 'pr', 'rd', 's ', 'wo', 'wp']))
-print()
+print ngram_vectorizer.get_feature_names() == ([' w', 'ds', 'or', 'pr', 'rd', 's ', 'wo', 'wp'])
+print
 
 '''
 prints the following array based on the content in the two terms 'words' and 'wprds'
@@ -24,24 +24,24 @@ prints the following array based on the content in the two terms 'words' and 'wp
  [  1       1       0       1       1       1     0     1   ]]    # wprds
 
 '''
-print(counts.toarray().astype(int))
-print()
+print counts.toarray().astype(int)
+print
 
 
 ngram_vectorizer = CountVectorizer(analyzer='char_wb', ngram_range=(5, 5), min_df=1)
-print(ngram_vectorizer.fit_transform(['jumpy fox']))  # .__repr__()
-print()
+print ngram_vectorizer.fit_transform(['jumpy fox'])  # .__repr__()
+print
 
 # note that also here space is added in all features except 'jumpy'
 # I'm guessing it splits up all words that are longer then ngram_range, by adding space?
-print(ngram_vectorizer.get_feature_names() == ([' fox ', ' jump', 'jumpy', 'umpy ']))
-print()
+print ngram_vectorizer.get_feature_names() == ([' fox ', ' jump', 'jumpy', 'umpy '])
+print
 
 
 # The 'char' analyzer creates n-grams that span across words
 ngram_vectorizer = CountVectorizer(analyzer='char', ngram_range=(5, 5), min_df=1)
-print(ngram_vectorizer.fit_transform(['jumpy fox']))
-print()
+print ngram_vectorizer.fit_transform(['jumpy fox'])
+print
 
 # char analyser includes the spaces
 '''
@@ -66,5 +66,5 @@ it seems that it takes the first word(s) and retrieves all characters until it h
     then it moves to the next char and retrieves until it has passed the limit
     repeat until no more words
 '''
-print(ngram_vectorizer.get_feature_names() == (['jumpy', 'mpy f', 'py fo', 'umpy ', 'y fox']))
-print()
+print ngram_vectorizer.get_feature_names() == (['jumpy', 'mpy f', 'py fo', 'umpy ', 'y fox'])
+print
